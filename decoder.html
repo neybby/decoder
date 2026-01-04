@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Base64 Decode</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #0f0f0f;
+            color: #00ffcc;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            background: #1e1e1e;
+            color: #00ffcc;
+            border: 1px solid #333;
+            padding: 10px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #00ffcc;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        pre {
+            background: #1e1e1e;
+            padding: 10px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Base64 decoder</h2>
+
+<textarea id="input" placeholder='{"data":"eyJmb28iOiJiYXIifQ=="}'></textarea>
+<br>
+<button onclick="decode()">Decode</button>
+
+<pre id="output"></pre>
+
+<script>
+function decode() {
+    const output = document.getElementById("output");
+    output.textContent = "";
+
+    try {
+        const input = JSON.parse(document.getElementById("input").value);
+        const encoded = input.data;
+
+        const decoded = atob(encoded);
+
+        try {
+            const json = JSON.parse(decoded);
+            output.textContent = JSON.stringify(json, null, 4);
+        } catch {
+            output.textContent = decoded;
+        }
+
+    } catch (e) {
+        output.textContent = "ERROR: " + e.message;
+    }
+}
+</script>
+
+</body>
+</html>
