@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Decoder</title>
+</head>
+<body>
+
+<textarea id="token" placeholder="base64 here"></textarea><br>
+<button onclick="send()">Decode</button>
+
+<pre id="out"></pre>
+
+<script>
+async function send() {
+    const token = document.getElementById("token").value;
+
+    const res = await fetch("/api/decode", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ data: token })
+    });
+
+    document.getElementById("out").textContent =
+        JSON.stringify(await res.json(), null, 4);
+}
+</script>
+
+</body>
+</html>
